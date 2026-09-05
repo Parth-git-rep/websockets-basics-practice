@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Test</title>
+</head>
+<body>
+    <textarea id="editor"></textarea>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script>
+        const socket = io("http://localhost:3001");
+        const editor=document.getElementById("editor");
+        editor.addEventListener("input",function(){
+            const data=editor.value;
+            socket.emit("text update",data);
+        }
+    );
+          // Receive updates from other users
+     socket.on("text update", (data) => {
+        editor.value = data;
+  })
+    </script>
+</body>
+</html>
