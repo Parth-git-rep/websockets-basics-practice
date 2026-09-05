@@ -9,8 +9,12 @@ io.on('connection',function(socket){
     socket.on('disconnect',function(){
         console.log("user disconnected:", socket.id);
     })
+    socket.on("join room",function(roomName){
+      socket.join(roomName);
+      socket.roomName = roomName;
+    })
     socket.on("text update", function(data) {
-  socket.broadcast.emit("text update", data);
+  socket.to(socket.roomName).emit("text update", data);
 });
 })
 
